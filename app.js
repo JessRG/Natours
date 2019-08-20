@@ -7,9 +7,12 @@ const userRouter = require('./routes/userRoutes');
 const app = express();
 
 // 1) MIDDLEWARES
-app.use(morgan('dev'));
-// parses incoming requests with JSON payloads
-app.use(express.json());
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev')); // HTTP request middleware logger
+}
+
+app.use(express.json()); // parses incoming requests with JSON payloads
+app.use(express.static(`${__dirname}/public`));
 
 app.use((req, res, next) => {
   console.log('Hello from the middleware 👋');
@@ -21,7 +24,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// 2) ROUTES
 app.use('/api/v1/tours', tourRouter); // Mount tourRouter
 app.use('/api/v1/users', userRouter); // Mount userRouter
 
