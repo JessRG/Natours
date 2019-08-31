@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(express.json()); // parses incoming requests with JSON payloads
-app.use(express.static(`${__dirname}/public`));
+app.use(express.static(`${__dirname}/public`)); // built-in middleware function
 
 app.use((req, res, next) => {
   console.log('Hello from the middleware 👋');
