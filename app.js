@@ -34,13 +34,14 @@ app.use('/api', limiter);
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' })); // parses incoming requests with JSON payloads
 
-// Data sanitization against NoSQL query injection
+// Data sanitization against NoSQL query injection (malicious code)
 app.use(mongoSanitize());
 
 // Data sanitization against XSS -> Cross-Site Scripting
 app.use(xss());
 
 // Prevent parameter pollution Http Parameter Pollution (hpp)
+// object of whitelist array of properties that are allowed to be duplicates within a query string
 app.use(
   hpp({
     whitelist: [

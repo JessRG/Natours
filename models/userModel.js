@@ -74,7 +74,7 @@ userSchema.pre(/^find/, function(next) {
   this.find({ active: { $ne: false } });
   next();
 });
-// Instance Methods
+// Schema Methods (Instance methods) need to be invoked by an instance of a document
 userSchema.methods.correctPassword = async function(
   candidatePassword,
   userPassword
