@@ -14,6 +14,7 @@ dotenv.config({ path: './config.env' });
 mongoose
   .connect(process.env.DATABASE_LOCAL, {
     // .connect(DB, {
+    useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false
