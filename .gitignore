@@ -1,4 +1,4 @@
-config.env
 node_modules/
+*.env
 .cache
 .vscode
