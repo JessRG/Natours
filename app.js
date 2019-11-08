@@ -17,6 +17,7 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
+const bookingController = require('./controllers/bookingController');
 const viewRouter = require('./routes/viewRoutes');
 
 // Start express app
@@ -59,6 +60,14 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour!'
 });
 app.use('/api', limiter);
+
+// Must specify webhook checkout route here in app.js before body parser middleware instead of the bookingRouter
+// the handler function, which will use a stripe function that will read the request body, needs the request body in a raw format as a stream not as JSON
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+);
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' })); // parses incoming requests with JSON payloads
